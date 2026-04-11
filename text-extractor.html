@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Extractor OCR — App Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf7f2;
+    --ink: #1a1208;
+    --gold: #c8973a;
+    --gold-light: #e8c97a;
+    --teal: #2a6b6e;
+    --teal-light: #4a9b9e;
+    --muted: #8a7a68;
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+  header {
+    padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(42,107,110,0.2);
+  }
+  .back { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--teal); text-decoration: none; font-weight: 500; transition: gap 0.3s; }
+  .back:hover { gap: 0.85rem; }
+  .logo { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; letter-spacing:0.08em; color:var(--teal); text-transform:uppercase; }
+  .logo span { color: var(--ink); }
+
+  .hero-banner {
+    background: linear-gradient(135deg, #0d2b2c 0%, #1a4a4c 50%, #2a6b6e 100%);
+    padding: 5rem 4rem;
+    position: relative; overflow: hidden; color: white;
+    animation: fadeIn 0.6s ease both;
+  }
+  .hero-banner::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 450px; height: 450px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(42,107,110,0.4), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-banner::after {
+    content: '🔍';
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    font-size: 10rem; opacity: 0.1; pointer-events: none;
+  }
+  .banner-inner { max-width: 640px; position: relative; z-index: 1; }
+  .app-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 500; padding: 0.3rem 0.75rem;
+    border-radius: 100px; margin-bottom: 1.5rem;
+    background: rgba(255,255,255,0.1); color: var(--teal-light);
+    border: 1px solid rgba(74,155,158,0.4);
+  }
+  .dot { width:6px; height:6px; border-radius:50%; background:var(--teal-light); animation:blink 2s infinite; }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+  .hero-banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem,5vw,4rem); font-weight: 900;
+    line-height: 1.1; margin-bottom: 0.75rem; letter-spacing: -0.02em;
+  }
+  .hero-banner .tagline { font-size: 1rem; opacity: 0.7; font-weight: 300; margin-bottom: 2rem; }
+  .hero-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--teal-light); color: white;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #5ab5b8; transform: scale(1.03); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.3); color: white;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    font-weight: 400; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .hero-meta { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .meta-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; }
+  .meta-val { font-size: 1.1rem; font-weight: 500; }
+
+  /* Accuracy badge */
+  .accuracy-band {
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 4rem;
+    display: flex; gap: 3rem; align-items: center;
+  }
+  .acc-item { text-align: center; }
+  .acc-val { font-family:'Playfair Display',serif; font-size: 2.2rem; font-weight:900; color: var(--teal-light); }
+  .acc-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-top: 0.25rem; }
+
+  .content { max-width: 960px; margin: 0 auto; padding: 4rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--teal);
+    display: inline-block;
+  }
+
+  .features-list { list-style: none; margin-bottom: 3rem; }
+  .features-list li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 0; border-bottom: 1px solid rgba(42,107,110,0.1);
+    font-size: 0.92rem; line-height: 1.6; font-weight: 300;
+  }
+  .features-list li:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .feat-text strong { display: block; font-weight: 500; margin-bottom: 0.2rem; }
+  .feat-text span { color: var(--muted); }
+
+  .how-it-works {
+    background: white; border-radius: 16px; padding: 2rem;
+    border: 1px solid rgba(42,107,110,0.1); margin-bottom: 3rem;
+  }
+  .steps { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+  .step { display: flex; gap: 1rem; align-items: flex-start; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: white; font-size: 0.82rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-body strong { display:block; font-size:0.9rem; margin-bottom:0.2rem; }
+  .step-body span { font-size:0.82rem; color:var(--muted); font-weight:300; }
+
+  .other-app-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; color: var(--ink); padding: 0.75rem;
+    border-radius: 10px; transition: background 0.2s;
+    margin-bottom: 0.5rem;
+  }
+  .other-app-link:hover { background: rgba(184,74,46,0.05); }
+  .oa-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .oa-name { font-size:0.85rem; font-weight:500; }
+  .oa-sub { font-size:0.72rem; color:var(--muted); }
+
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .info-card {
+    background: white; border-radius: 16px; padding: 1.75rem;
+    border: 1px solid rgba(42,107,110,0.1);
+    box-shadow: 0 2px 16px rgba(26,18,8,0.05);
+  }
+  .info-card h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:1rem; }
+  .info-row { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(42,107,110,0.08); font-size:0.82rem; }
+  .info-row:last-child { border-bottom:none; }
+  .info-row .ik { color:var(--muted); font-weight:300; }
+  .info-row .iv { font-weight:500; text-align:right; }
+  .rating-big { text-align:center; padding:1rem 0; }
+  .rating-num-big { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:900; color:var(--teal); line-height:1; }
+  .stars-row { font-size:1.2rem; color:var(--teal); margin:0.4rem 0; }
+  .rating-count { font-size:0.78rem; color:var(--muted); }
+
+  .review-card {
+    background: white; border-radius: 14px; padding: 1.5rem;
+    border: 1px solid rgba(42,107,110,0.1); margin-bottom: 1rem;
+  }
+  .review-header { display:flex; justify-content:space-between; margin-bottom:0.75rem; }
+  .reviewer { font-weight:500; font-size:0.88rem; }
+  .review-date { font-size:0.75rem; color:var(--muted); }
+  .review-stars { color:var(--teal); font-size:0.82rem; margin-bottom:0.5rem; }
+  .review-title { font-weight:500; margin-bottom:0.35rem; font-size:0.9rem; }
+  .review-body { font-size:0.85rem; color:var(--muted); font-weight:300; line-height:1.6; }
+
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid rgba(42,107,110,0.15);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size:0.78rem; color:var(--muted); font-weight:300; }
+  footer a { color:var(--teal); text-decoration:none; }
+
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @media(max-width:768px){
+    header,footer{padding:2rem;flex-direction:column;gap:1rem;align-items:flex-start}
+    .hero-banner{padding:3rem 2rem} .hero-banner::after{display:none}
+    .accuracy-band{padding:1.5rem 2rem;flex-wrap:wrap;gap:1.5rem}
+    .content{padding:2rem} .content-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back">← Back to all apps</a>
+  <div class="logo">VNK <span>Mobile Apps</span></div>
+</header>
+
+<div class="hero-banner">
+  <div class="banner-inner">
+    <div class="app-badge"><div class="dot"></div> Live on App Store</div>
+    <h1>Text Extractor<br>OCR</h1>
+    <p class="tagline">Capture · Detect · Extract — from any image or document</p>
+    <div class="hero-cta-row">
+      <a href="https://apps.apple.com/app/text-extractor-ocr/id1546914853" target="_blank" class="btn-primary">🍎 Download on App Store</a>
+      <a href="https://www.vnkmobileapps.com/text-extractor-privacy.html" target="_blank" class="btn-ghost">Privacy Policy</a>
+      <a href="mailto:vnktextextractor@gmail.com" class="btn-ghost">Contact Developer</a>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Rating</span>
+        <span class="meta-val">★ 5.0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Reviews</span>
+        <span class="meta-val">4</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Price</span>
+        <span class="meta-val">$5.99</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-val">1.0.3</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accuracy-band" style="background:#0d2b2c;color:white;">
+  <div class="acc-item"><div class="acc-val">99%</div><div class="acc-label">Accuracy</div></div>
+  <div class="acc-item"><div class="acc-val">50+</div><div class="acc-label">Languages</div></div>
+  <div class="acc-item"><div class="acc-val">∞</div><div class="acc-label">Multi-page Docs</div></div>
+  <div class="acc-item"><div class="acc-val">✓</div><div class="acc-label">Handwriting</div></div>
+</div>
+
+<div class="content">
+  <div class="content-grid">
+    <div class="main">
+      <div class="section-title">Features</div>
+      <ul class="features-list">
+        <li>
+          <div class="feat-icon">🖼</div>
+          <div class="feat-text"><strong>Extract from Images</strong><span>Point at any photo, screenshot, or scanned document and instantly pull out all the text with remarkable precision.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">✍️</div>
+          <div class="feat-text"><strong>Handwriting Support</strong><span>Even handwritten notes are recognised with high accuracy, making it perfect for digitising personal documents.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">📄</div>
+          <div class="feat-text"><strong>Multi-page Documents</strong><span>Process entire multi-page documents in one go, without having to scan each page separately.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">✂️</div>
+          <div class="feat-text"><strong>Crop & Extract</strong><span>Crop specific areas of an image to extract only the text you need — no noise, no extra content.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🌐</div>
+          <div class="feat-text"><strong>Multi-language Support</strong><span>Supports most major world languages and scripts, so no document is beyond your reach.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">📤</div>
+          <div class="feat-text"><strong>Share Extracted Text</strong><span>Export and share your extracted text directly to any app — Notes, Mail, WhatsApp, and more.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🌙</div>
+          <div class="feat-text"><strong>Dark Mode</strong><span>Full dark mode support for comfortable use in any lighting condition.</span></div>
+        </li>
+      </ul>
+
+      <div class="how-it-works">
+        <div class="section-title">How it Works</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body"><strong>Capture or Import</strong><span>Take a photo with your camera or import an existing image from your library.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body"><strong>Detect Text</strong><span>The OCR engine automatically detects all text regions in the image with 99% accuracy.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body"><strong>Extract & Share</strong><span>Copy the extracted text or share it directly with any other app on your device.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">User Reviews</div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="reviewer">Apple_user</span>
+          <span class="review-date">Aug 2023</span>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-title">Great tool to extract content from image or document</div>
+        <div class="review-body">Easy to use and gets the job done perfectly. Extracted text from a scanned invoice without any errors. Highly recommended!</div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="info-card">
+        <div class="rating-big">
+          <div class="rating-num-big">5.0</div>
+          <div class="stars-row">★★★★★</div>
+          <div class="rating-count">4 ratings</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <h3>App Info</h3>
+        <div class="info-row"><span class="ik">Category</span><span class="iv">Productivity</span></div>
+        <div class="info-row"><span class="ik">Price</span><span class="iv">$5.99</span></div>
+        <div class="info-row"><span class="ik">Size</span><span class="iv">12.3 MB</span></div>
+        <div class="info-row"><span class="ik">Version</span><span class="iv">1.0.3</span></div>
+        <div class="info-row"><span class="ik">Updated</span><span class="iv">Nov 8, 2024</span></div>
+        <div class="info-row"><span class="ik">iOS</span><span class="iv">14.0+</span></div>
+        <div class="info-row"><span class="ik">Age Rating</span><span class="iv">4+</span></div>
+        <div class="info-row"><span class="ik">Platform</span><span class="iv">iPhone · iPad · Mac</span></div>
+      </div>
+      <div class="info-card other-apps">
+        <h3>Other Apps</h3>
+        <a href="tamil-calendar.html" class="other-app-link">
+          <div class="oa-icon" style="background:linear-gradient(135deg,#c8973a,#e8c97a)">📅</div>
+          <div><div class="oa-name">Tamil Calendar 2026</div><div class="oa-sub">Free · Utilities</div></div>
+        </a>
+        <a href="mazhalai-tamil.html" class="other-app-link">
+          <div class="oa-icon" style="background:linear-gradient(135deg,#ee4f4fc1,#9e594a)">📖</div>
+          <div><div class="oa-name">Mazhalai Tamil</div><div class="oa-sub">Free In-App Purchases · Education</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Bhuvaneswari Sekar</p>
+  <p><a href="index.html">← Back to all apps</a></p>
+</footer>
+</body>
+</html>

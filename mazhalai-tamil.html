@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mazhalai Tamil — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf7f2;
+    --ink: #1a1208;
+    --gold: #c8973a;
+    --gold-light: #e8c97a;
+    --rust: #b84a2e;
+    --rust-light: #d47a5e;
+    --muted: #8a7a68;
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  header {
+    padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(184,74,46,0.2);
+  }
+  .back { display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; color:var(--rust); text-decoration:none; font-weight:500; transition:gap 0.3s; }
+  .back:hover { gap:0.85rem; }
+  .logo { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; letter-spacing:0.08em; color:var(--rust); text-transform:uppercase; }
+  .logo span { color:var(--ink); }
+
+  /* Hero — full-screen styled */
+  .hero-banner {
+    background: linear-gradient(135deg, #2a0c04 0%, #5c1e0e 40%, #b84a2e 100%);
+    padding: 5rem 4rem;
+    position: relative; overflow: hidden; color: white;
+    animation: fadeIn 0.6s ease both;
+  }
+  .hero-banner::before {
+    content: '';
+    position: absolute; bottom: -100px; right: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,201,122,0.2), transparent 65%);
+    pointer-events: none;
+  }
+  /* Tamil letter decoration */
+  .hero-banner::after {
+    content: 'அ';
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    font-size: 18rem; opacity: 0.05;
+    font-family: serif; pointer-events: none; line-height: 1;
+  }
+  .banner-inner { max-width: 640px; position: relative; z-index: 1; }
+  .coming-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; padding: 0.35rem 1rem;
+    border-radius: 100px; margin-bottom: 1.75rem;
+    background: rgba(232,201,122,0.15); color: var(--gold-light);
+    border: 1px solid rgba(232,201,122,0.3);
+  }
+  .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold-light); }
+  .hero-banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 900;
+    line-height: 1.08; margin-bottom: 0.5rem; letter-spacing: -0.02em;
+  }
+  .tamil-subtitle {
+    font-size: 1.8rem;
+    opacity: 0.5; margin-bottom: 1.25rem;
+    font-family: serif; letter-spacing: 0.05em;
+  }
+  .hero-banner .tagline { font-size: 1rem; opacity: 0.7; font-weight: 300; margin-bottom: 2rem; max-width: 440px; line-height: 1.7; }
+  .hero-meta { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+  .meta-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.45; }
+  .meta-val { font-size: 1.05rem; font-weight: 500; }
+
+  /* Notify form */
+  .notify-bar {
+    background: #fff8f0;
+    border-bottom: 1px solid rgba(184,74,46,0.12);
+    padding: 2rem 4rem;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .notify-label { font-size: 0.9rem; color: var(--ink); font-weight: 500; }
+  .notify-form { display: flex; gap: 0.75rem; flex: 1; max-width: 420px; }
+  .notify-form input {
+    flex: 1; padding: 0.75rem 1.25rem;
+    border: 1px solid rgba(184,74,46,0.2); border-radius: 100px;
+    font-size: 0.88rem; font-family: inherit; background: white;
+    outline: none; transition: border-color 0.2s;
+  }
+  .notify-form input:focus { border-color: var(--rust); }
+  .notify-form button {
+    padding: 0.75rem 1.5rem; background: var(--rust); color: white;
+    border: none; border-radius: 100px; font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.2s;
+  }
+  .notify-form button:hover { background: #9e3a1e; transform: scale(1.03); }
+
+  .content { max-width: 960px; margin: 0 auto; padding: 4rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; }
+
+  .app-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 500; padding: 0.3rem 0.75rem;
+    border-radius: 100px; margin-bottom: 1.5rem;
+    background: rgba(255,255,255,0.15); color: var(--gold-light);
+    border: 1px solid rgba(200,151,58,0.3);
+  }
+  .dot { width:6px; height:6px; border-radius:50%; background:var(--gold-light); animation:blink 2s infinite; }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--rust); display: inline-block;
+  }
+
+  .vision-text { font-size: 1rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 2.5rem; }
+  .vision-text strong { color: var(--ink); font-weight: 500; }
+
+  .planned-features { list-style: none; margin-bottom: 3rem; }
+  .planned-features li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 0; border-bottom: 1px solid rgba(184,74,46,0.1);
+    font-size: 0.92rem; line-height: 1.6; font-weight: 300;
+  }
+  .planned-features li:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--rust), var(--rust-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .feat-text strong { display:block; font-weight:500; margin-bottom:0.2rem; }
+  .feat-text span { color: var(--muted); }
+
+  /* Letters showcase */
+  .letters-showcase {
+    background: white; border-radius: 16px; padding: 2rem;
+    border: 1px solid rgba(184,74,46,0.1); margin-bottom: 3rem;
+    text-align: center;
+  }
+  .letters-showcase h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:1.25rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; font-size:0.8rem; }
+  .letters-grid {
+    display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+  }
+  .letter-tile {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--rust), var(--rust-light));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.5rem;
+    font-family: serif; font-weight: 700;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 4px 12px rgba(184,74,46,0.25);
+  }
+  .letter-tile:nth-child(2){animation-delay:0.3s}
+  .letter-tile:nth-child(3){animation-delay:0.6s}
+  .letter-tile:nth-child(4){animation-delay:0.9s}
+  .letter-tile:nth-child(5){animation-delay:1.2s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .info-card {
+    background: white; border-radius: 16px; padding: 1.75rem;
+    border: 1px solid rgba(184,74,46,0.1);
+    box-shadow: 0 2px 16px rgba(26,18,8,0.05);
+  }
+  .info-card h3 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:1rem; }
+  .info-row { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(184,74,46,0.08); font-size:0.82rem; }
+  .info-row:last-child { border-bottom:none; }
+  .info-row .ik { color:var(--muted); font-weight:300; }
+  .info-row .iv { font-weight:500; text-align:right; }
+
+  .timeline { list-style: none; }
+  .tl-item { display: flex; gap: 1rem; padding: 0.85rem 0; position: relative; }
+  .tl-item::before {
+    content: ''; position: absolute; left: 10px; top: 2.5rem;
+    width: 1px; height: calc(100% - 1.5rem);
+    background: rgba(184,74,46,0.2);
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-dot {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid var(--rust); background: white;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 0.15rem;
+  }
+  .tl-dot.active { background: var(--rust); }
+  .tl-dot.active::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
+  .tl-text strong { display: block; font-size: 0.85rem; font-weight: 500; }
+  .tl-text span { font-size: 0.78rem; color: var(--muted); }
+  .hero-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--rust-light); color: white;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #f29475; transform: scale(1.03); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.3); color: white;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    font-weight: 400; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .other-app-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; color: var(--ink); padding: 0.75rem;
+    border-radius: 10px; transition: background 0.2s;
+    margin-bottom: 0.5rem;
+  }
+  .other-app-link:hover { background: rgba(184,74,46,0.05); }
+  .oa-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .oa-name { font-size:0.85rem; font-weight:500; }
+  .oa-sub { font-size:0.72rem; color:var(--muted); }
+
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid rgba(184,74,46,0.12);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size:0.78rem; color:var(--muted); font-weight:300; }
+  footer a { color:var(--rust); text-decoration:none; }
+
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @media(max-width:768px){
+    header,footer{padding:2rem;flex-direction:column;gap:1rem;align-items:flex-start}
+    .hero-banner{padding:3rem 2rem} .hero-banner::after{display:none}
+    .notify-bar{padding:1.5rem 2rem}
+    .content{padding:2rem} .content-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back">← Back to all apps</a>
+  <div class="logo">VNK <span>Mobile Apps</span></div>
+</header>
+
+<div class="hero-banner">
+  <div class="banner-inner">
+    <div class="app-badge"><div class="dot"></div> Live on App Store</div>
+    <h1>Mazhalai Tamil</h1>
+    <div class="tamil-subtitle">மழலை தமிழ்</div>
+    <p class="tagline">A joyful Tamil learning experience for young minds — where every letter is an adventure and every word a discovery.</p>
+    <div class="hero-cta-row">
+      <a href="https://apps.apple.com/app/mazhalai-tamil/id6760153370" target="_blank" class="btn-primary">🍎 Download on App Store</a>
+      <a href="https://www.vnkmobileapps.com/mazhalai-tamil-privacy.html" target="_blank" class="btn-ghost">Privacy Policy</a>
+      <a href="mailto:vnkmazhalaitamil@gmail.com" class="btn-ghost">Contact Developer</a>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Target Age</span>
+        <span class="meta-val">3+</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-val">iPhone · iPad</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Letters</span>
+        <span class="meta-val">Vowels (உயிர்), Consonants (மெய்) & Vowel-Consonant (உயிர்மெய்)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Writing</span>
+        <span class="meta-val">✍ Interactive tracing</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Audio</span>
+        <span class="meta-val">🎵 For letters and words</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="content-grid">
+    <div class="main">
+
+      <div class="letters-showcase">
+        <h3>Tamil Alphabet Showcase</h3>
+        <div class="letters-grid">
+          <div class="letter-tile">அ</div>
+          <div class="letter-tile">ஆ</div>
+          <div class="letter-tile">இ</div>
+          <div class="letter-tile">க</div>
+          <div class="letter-tile">ச</div>
+        </div>
+      </div>
+
+      <div class="section-title">Our Vision</div>
+      <p class="vision-text">
+        <strong>Mazhalai Tamil</strong> (மழலை தமிழ்) — "mazhalai" means the sweet babbling of children — is designed to bring the beauty of the Tamil language to the youngest learners. We believe that language is the root of culture, and giving children a joyful introduction to Tamil is a gift that lasts a lifetime.
+        <br><br>
+        The app will use <strong>interactive pictures, and audio</strong> guided by native speakers, helping children recognise Tamil letters and words and introduce them to practice writing letters — all without feeling like schoolwork.
+      </p>
+
+      <div class="section-title"> Features</div>
+      <ul class="planned-features">
+        <li>
+          <div class="feat-icon">🔤</div>
+          <div class="feat-text"><strong>Tamil Alphabet (உயிர், மெய் & உயிர்மெய்)</strong><span>Learn all 247 Tamil characters through picture, audio and interactive tracing exercises.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">✍</div>
+          <div class="feat-text"><strong>Learn to Write Letters</strong><span>Practice writing of all Tamil letters with interactive tracing exercises.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🎵</div>
+          <div class="feat-text"><strong>Audio by Native Speakers</strong><span>Every letter and word is voiced by native Tamil speakers ensuring authentic pronunciation from day one.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🌐</div>
+          <div class="feat-text"><strong>English Support</strong><span>Learn Tamil with the help of English pronunciation guides.</span></div>
+        </li>
+        <li>
+          <div class="feat-icon">🌙</div>
+          <div class="feat-text"><strong>Dark Mode</strong><span>Full dark mode support for comfortable use in any lighting condition.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar">
+      <div class="info-card">
+        <h3>App Info</h3>
+        <div class="info-row"><span class="ik">Category</span><span class="iv">Education</span></div>
+        <div class="info-row"><span class="ik">Price</span><span class="iv">Free with In-app Purchases</span></div>
+        <div class="info-row"><span class="ik">Size</span><span class="iv">9.4 MB</span></div>
+        <div class="info-row"><span class="ik">Version</span><span class="iv">1.0.0</span></div>
+        <div class="info-row"><span class="ik">Updated</span><span class="iv">Apr 14, 2026</span></div>
+        <div class="info-row"><span class="ik">iOS</span><span class="iv">18.0+</span></div>
+        <div class="info-row"><span class="ik">Age Rating</span><span class="iv">3+</span></div>
+        <div class="info-row"><span class="ik">Platform</span><span class="iv">iPhone, iPad, Mac</span></div>
+
+      </div>
+
+      <div class="info-card other-apps">
+        <h3>Other Apps</h3>
+        <a href="tamil-calendar.html" class="other-app-link">
+          <div class="oa-icon" style="background:linear-gradient(135deg,#c8973a,#e8c97a)">📅</div>
+          <div><div class="oa-name">Tamil Calendar 2026</div><div class="oa-sub">Free · Utilities</div></div>
+        </a>
+        <a href="text-extractor.html" class="other-app-link">
+          <div class="oa-icon" style="background:linear-gradient(135deg,#2a6b6e,#4a9b9e)">🔍</div>
+          <div><div class="oa-name">Text Extractor OCR</div><div class="oa-sub">$5.99 · Productivity</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Bhuvaneswari Sekar</p>
+  <p><a href="index.html">← Back to all apps</a></p>
+</footer>
+</body>
+</html>
