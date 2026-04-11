@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhuvaneswari Sekar — Apps</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf7f2;
+    --ink: #1a1208;
+    --gold: #c8973a;
+    --gold-light: #e8c97a;
+    --rust: #b84a2e;
+    --teal: #2a6b6e;
+    --muted: #8a7a68;
+  }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  header {
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(200,151,58,0.2);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--ink); }
+  .header-tag { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .hero {
+    padding: 5rem 4rem 3rem;
+    max-width: 820px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p { font-size: 1rem; color: var(--muted); font-weight: 300; max-width: 460px; line-height: 1.75; }
+  .apps-section { padding: 2rem 4rem 5rem; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 2.5rem;
+    padding-bottom: 1rem; border-bottom: 1px solid rgba(200,151,58,0.15);
+  }
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+  .app-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border: 1px solid rgba(200,151,58,0.1);
+    box-shadow: 0 2px 20px rgba(26,18,8,0.05);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .app-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,18,8,0.1); }
+  .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    color: rgba(200,151,58,0.1); line-height: 1;
+    margin-bottom: 1.25rem; letter-spacing: -0.04em;
+  }
+  .app-icon {
+    width: 60px; height: 60px; border-radius: 14px;
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem;
+  }
+  .ic-cal { background: linear-gradient(135deg, #c8973a, #e8c97a); }
+  .ic-ocr { background: linear-gradient(135deg, #2a6b6e, #4a9b9e); }
+  .ic-maz { background: linear-gradient(135deg, #b84a2e, #d47a5e); }
+  .app-status {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 500; padding: 0.28rem 0.7rem;
+    border-radius: 100px; margin-bottom: 1rem;
+  }
+  .live { background: rgba(42,107,110,0.1); color: var(--teal); }
+  .soon { background: rgba(184,74,46,0.1); color: var(--rust); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .live .dot { background: var(--teal); animation: blink 2s infinite; }
+  .soon .dot { background: var(--rust); }
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.4} }
+  .app-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .sub { font-size: 0.82rem; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem; letter-spacing: 0.04em; }
+  .rating { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1rem; }
+  .stars { color: var(--gold); font-size: 0.8rem; }
+  .rating-num { font-size: 0.78rem; color: var(--muted); }
+  .app-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300; }
+  .card-meta { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .tag {
+    font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); background: var(--cream);
+    padding: 0.28rem 0.6rem; border-radius: 6px; font-weight: 500;
+  }
+  .card-arrow { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 500; color: var(--gold); transition: gap 0.3s; }
+  .app-card:hover .card-arrow { gap: 0.9rem; }
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid rgba(200,151,58,0.15);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+  footer a { color: var(--gold); text-decoration: none; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .app-card:nth-child(1){animation:fadeUp 0.6s 0.15s ease both}
+  .app-card:nth-child(2){animation:fadeUp 0.6s 0.28s ease both}
+  .app-card:nth-child(3){animation:fadeUp 0.6s 0.4s ease both}
+  @media(max-width:768px){
+    header,footer{padding:2rem;flex-direction:column;gap:0.5rem;align-items:flex-start}
+    .hero,.apps-section{padding-left:2rem;padding-right:2rem}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">VNK <span>Mobile Apps</span></div>
+  <div class="header-tag">iOS Applications · App Store</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Portfolio</div>
+  <h1>Crafted<br>with <em>care,</em><br>built for you.</h1>
+  <p>A collection of thoughtfully designed iOS applications — from cultural tools that honour tradition to productivity apps that reclaim your time.</p>
+</section>
+
+<section class="apps-section">
+  <div class="section-label">All Applications — 3 total</div>
+  <div class="apps-grid">
+
+    <a href="tamil-calendar.html" class="app-card">
+      <div class="card-num">01</div>
+      <div class="app-icon ic-cal">📅</div>
+      <div class="app-status live"><div class="dot"></div>Live on App Store</div>
+      <h2>Tamil Calendar 2026</h2>
+      <div class="sub">Utilities · Free</div>
+      <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">4.7 · 202 ratings</span></div>
+      <p>A beautifully crafted digital Tamil calendar with daily details, auspicious days, and widget support — fully offline.</p>
+      <div class="card-meta">
+        <span class="tag">iPhone</span><span class="tag">iOS 14+</span>
+      </div>
+      <div class="card-arrow">View Details →</div>
+    </a>
+
+    <a href="mazhalai-tamil.html" class="app-card">
+      <div class="card-num">02</div>
+      <div class="app-icon ic-maz">📖</div>
+      <div class="app-status soon"><div class="dot"></div>Coming Soon</div>
+      <h2>Mazhalai Tamil</h2>
+      <div class="sub">Education · Free with In-App Purchases</div>
+      <p>Tamil learning app designed for children — playful, intuitive, and rooted in the richness of Tamil language and culture.</p>
+      <div class="card-meta">
+        <span class="tag">iPhone · iPad</span><span class="tag">iOS 18+</span>
+      </div>
+      <div class="card-arrow">Learn More →</div>
+    </a>
+
+    <a href="text-extractor.html" class="app-card">
+      <div class="card-num">03</div>
+      <div class="app-icon ic-ocr">🔍</div>
+      <div class="app-status live"><div class="dot"></div>Live on App Store</div>
+      <h2>Text Extractor OCR</h2>
+      <div class="sub">Productivity · $5.99</div>
+      <div class="rating"><span class="stars">★★★★★</span><span class="rating-num">5.0 · 4 ratings</span></div>
+      <p>Extract text from any image or document with 99% accuracy. Supports handwriting, multi-page docs, and dozens of languages.</p>
+      <div class="card-meta">
+        <span class="tag">iPhone · iPad</span><span class="tag">iOS 14+</span>
+      </div>
+      <div class="card-arrow">View Details →</div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Bhuvaneswari Sekar. All rights reserved.</p>
+  <p>Built with ♥ for the Tamil community · <a href="mailto:vnkmobileapps@gmail.com">Contact</a></p>
+</footer>
+</body>
+</html>
